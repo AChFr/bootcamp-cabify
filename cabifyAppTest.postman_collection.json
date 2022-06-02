@@ -1,0 +1,320 @@
+{
+	"info": {
+		"_postman_id": "f525125c-74da-4edb-afa4-adbd846c3ac3",
+		"name": "cabifyAppTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19523186"
+	},
+	"item": [
+		{
+			"name": "correct request (may return a controlled 500)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"destination\": \"testDestination\",\r\n     \"message\": \"testMessage\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9001/messages",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"messages"
+					]
+				},
+				"description": "correct request."
+			},
+			"response": []
+		},
+		{
+			"name": "wrong endpoint",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"destination\": \"testDestination\",\r\n     \"message\": \"testMessage\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9001/messagess",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"messagess"
+					]
+				},
+				"description": "correct request."
+			},
+			"response": []
+		},
+		{
+			"name": "incomplete payload",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \r\n     \"message\": \"testMessage\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9001/messages",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"messages"
+					]
+				},
+				"description": "correct request."
+			},
+			"response": []
+		},
+		{
+			"name": "excesive payload",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"destination\": \"testDestination\",\r\n     \"message\": \"testMessage\",\r\n  \"message2\": \"testMessage2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9001/messages",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"messages"
+					]
+				},
+				"description": "correct request."
+			},
+			"response": []
+		},
+		{
+			"name": "wrong keys",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"destinationError\": \"testDestination\",\r\n     \"messageError\": \"testMessage\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9001/messages",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"messages"
+					]
+				},
+				"description": "correct request."
+			},
+			"response": []
+		},
+		{
+			"name": "empty destination",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"destination\": \"\",\r\n     \"message\": \"testMessage\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9001/messages",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"messages"
+					]
+				},
+				"description": "correct request."
+			},
+			"response": []
+		},
+		{
+			"name": "empty message",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"destination\": \"testDestination\",\r\n     \"message\": \"\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9001/messages",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"messages"
+					]
+				},
+				"description": "correct request."
+			},
+			"response": []
+		},
+		{
+			"name": "JSON with an error",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"destination\": \"testDestination\"\r\n     \"message\": \"testMessage\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9001/messages",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"messages"
+					]
+				},
+				"description": "correct request."
+			},
+			"response": []
+		},
+		{
+			"name": "wrong method: PUT",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"destination\": \"testDestination\",\r\n     \"message\": \"testMessage\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9001/messages",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"messages"
+					]
+				},
+				"description": "correct request."
+			},
+			"response": []
+		},
+		{
+			"name": "wrong method: PATCH",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"destination\": \"testDestination\",\r\n     \"message\": \"testMessage\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9001/messages",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"messages"
+					]
+				},
+				"description": "correct request."
+			},
+			"response": []
+		},
+		{
+			"name": "wrong method: DELETE",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9001/messages",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"messages"
+					]
+				},
+				"description": "correct request."
+			},
+			"response": []
+		}
+	]
+}

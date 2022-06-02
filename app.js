@@ -7,6 +7,6 @@ require("./config")(app);
 const allRoutes = require("./routes/index.routes");
 app.use("/", allRoutes);
 
-require("./error-handling")(app);
+require("./middleware/errors/api.errorHandler.js")(app);
 
 module.exports = app;
