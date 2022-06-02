@@ -1,9 +1,9 @@
 
 ## API BEHAVIOUR TESTING
 
-This is a chart that shows the expected behaviour of the api. This behaviour can be tested rather by running the [EXECUTABLE.SH FILE](./executable.sh) file with ``./executable.sh`` command  or the [POSTMAN tests Link](./cabifyAppTest.postman_collection.json)  file with ``.newman run cabifyAppTest.postman_collection.json `` command. You can add the `--verbose` flag after the file name to see the detailed information of each request. However, there a re two cases that cannot be reprduced so far:
+This is a chart that shows the expected behaviour of the api. This behaviour can be tested rather by running the [EXECUTABLE.SH FILE](./executable.sh) file with ``./executable.sh`` or ``docker exec bootcamp-cabify-exercise01-1 sh ./executable.sh `` command  or the [POSTMAN tests Link](./cabifyAppTest.postman_collection.json)  file with ``.newman run cabifyAppTest.postman_collection.json `` command. (you may need te install newman globally ``npm i -g newman``) You can add the `--verbose` flag after the file name to see the detailed information of each request. However, there a re two cases that cannot be reprduced so far:
 * A real status `500` on the messageapp is very difficult to get since almost all of the possible problems are sorted out at `localhost/9001`. 
-* A `408` status is also unobtaiable-at least by me- nither with `Postman` nor `cUrl`, althought it is speciofied in the ´Axios´ configuration.
+* A `408` status is also unobtaiable-at least by me- nither with `Postman` nor `cURL`, althought it is speciofied in the ´Axios´ configuration.
 
 Also it is worth noting that the app has automated integration tests (`npm run test` )that cover almost all of the error cases, with the aforementioned exceptions. 
 
