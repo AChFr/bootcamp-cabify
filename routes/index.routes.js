@@ -1,12 +1,12 @@
 const APIHandler = require("../services/message.service");
-const { contentValidator } = require("../middleware");
+const { contentValidator, jsonParser } = require("../middleware");
 const router = require("express").Router();
 
 const messageService = new APIHandler
 
 
 
-router.post("/messages", contentValidator, (req, res, next) => {
+router.post("/messages", jsonParser, contentValidator, (req, res, next) => {
 
   messageService
     .sendMessage(req.body)

@@ -27,11 +27,24 @@ describe("Integration tests", () => {
             }
         }).timeout(0)
 
-        it("POST /messages without a payload returns 400 ", async () => {
+        it("POST /messages with wrong content type returns 400 and custom message ", async () => {
+            const test = await request(app)
+                .post("/messages",)
+                .set("Content-type", "text")
+                .send(" test string ")
+                .expect(400)
+
+            expect(test.body).to.deep.equal("You need to provide a valid JSON as a req.body.")
+
+        })
+
+        it("POST /messages with empty body returns 400 and custom message", async () => {
             const test = await request(app)
                 .post("/messages",)
                 .set("Accept", "application/json")
                 .expect(400)
+
+            expect(test.body).to.deep.equal("You need to provide a valid JSON as a req.body.")
         })
 
         it("POST /messages with missing or extra properties returns 400 and custom errors", async () => {
@@ -50,7 +63,7 @@ describe("Integration tests", () => {
                 .send({
                     "destination": "testDestination",
                     "message": "testMessage",
-                    "additionalIno": "testInfo",
+                    "additionalInfo": "testInfo",
                 })
                 .expect(400)
             expect(test2.body).to.deep.equal("You need to provide destination and message only.")

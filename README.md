@@ -24,4 +24,5 @@ PUT | Wrong method |http://localhost:9001/messages | {"destination": "testDestin
 PATCH| Wrong method |http://localhost:9001/messages | {"destination": "testDestination", "message":"testMessage" |"This method is not authorized for this endpoint" | 405
 DELETE  | Wrong method |http://localhost:9001/messages | none |"This method is not authorized for this endpoint" | 405
 POST  | connection to the messegeapp times out (unable to test and reproduce )|http://localhost:9001/messages |  {"destination": "testDestination", "message":"testMessage"}|"Your request timed out"| 408
+POST  | Wrong content type sent as payload / Empty payload sent |http://localhost:9001/messages |  "destination": "testDestination", "message":"testMessage" / Nothing |"You need to provide a  valid JSON as a req.body."| 400
 ###
