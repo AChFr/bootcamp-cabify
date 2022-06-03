@@ -4,7 +4,7 @@ const jsonParser = bodyParser.json()
 
 
 
-const contentValidator = (req, res, next) => {
+const reqBodyValidator = (req, res, next) => {
 
     if (Object.keys(req.body).length === 0) {
         return res.status(400).json("You need to provide a valid JSON as a req.body.")
@@ -35,4 +35,4 @@ const contentValidator = (req, res, next) => {
 
 
 
-module.exports = { contentValidator, jsonParser }
+module.exports = { reqBodyValidator, jsonParser }

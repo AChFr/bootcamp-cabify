@@ -1,6 +1,6 @@
 const axios = require("axios")
 
-class APIHandler {
+class MessageappAPIHandler {
 
     constructor() {
         this.axiosApp = axios.create({
@@ -10,16 +10,21 @@ class APIHandler {
         })
     }
 
-    sendMessage(messagefromClient) {
+    sendMessage = async (messagefromClient) => {
 
         const messageToApi = {
             destination: messagefromClient.destination,
             body: messagefromClient.message
         }
 
-        return this.axiosApp.post(`/message`, messageToApi)
+        try {
+            const response = await this.axiosApp.post(`/message`, messageToApi)
+            return response
+        } catch (error) {
+            return (error)
+        }
     }
 
 }
 
-module.exports = APIHandler
+module.exports = MessageappAPIHandler
