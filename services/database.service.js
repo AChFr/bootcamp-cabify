@@ -24,4 +24,4 @@ const getEntries = async () => {
 
 }
 
-module.exports = { createEntry, checkForDuplicates, getEntries, deleteAll }
+module.exports = { createEntry, checkForDuplicates, getEntries }
