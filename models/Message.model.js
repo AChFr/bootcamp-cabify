@@ -13,10 +13,14 @@ const messageSchema = new Schema(
             required: true
         },
 
-        // number: {
-        //     type: Number,
-        //     required: true
-        // }
+
+
+        status: {
+            type: String,
+            enum: ["sent", "unconfirmed", "not sent"],
+            required: true
+        }
+
     },
     {
         timestamps: true,

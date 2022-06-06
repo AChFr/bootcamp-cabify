@@ -1,23 +1,62 @@
 const databaseApiHandler = require("../services/database.service")
 
+let responseFromApi
+let firstTry = true
+let status
 
 const recordMessage = async (entryInfo) => {
 
-    const response = await databaseApiHandler.createEntry(entryInfo)
+    responseFromApi = await databaseApiHandler.createEntry(entryInfo)
 
+    if ((responseFromApi instanceof Error)) {
 
-    if (!response.name) {
-        response.status = 201
-        return response
+        if (responseFromApi.message.includes("timeout") || responseFromApi.name.includes("timeout")) {
+
+            const thisMoment = Date.now()
+            const momentsAgo = new Date(thisMoment - 1000)
+            const duplicate = await databaseApiHandler.checkForDuplicates({ createdAt: momentsAgo })
+
+            if (duplicate) {
+                status = "success"
+            }
+            else {
+                firstTry ? await retry(entryInfo) : giveUp()
+            }
+            return status
+        }
+
+        else {
+            firstTry ? await retry(entryInfo) : giveUp()
+            return status
+        }
+
     }
 
-    else if (response.name === "MongooseError") {
-        response.status = 503
-        return response
+
+    else {
+        firstTry = true
+        status = "success"
+        return status
+    }
+}
+
+const retry = async (entryInfo) => {
+    firstTry = false
+    console.log("lo reinteti")
+    await recordMessage(entryInfo)
+    return status
+}
+
+const giveUp = () => {
+    firstTry = true
+
+    if (responseFromApi.message.includes("timeout") || responseFromApi.name.includes("timeout")) {
+        status = "timeout"
+        return status
     }
     else {
-        response.status = 500
-        return response
+        status = "failure"
+        return status
     }
 }
 

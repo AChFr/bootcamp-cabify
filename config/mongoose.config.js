@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 
 
 
-const MONGO_URI = "mongodb://mongodb/server";
+const MONGO_URI = "mongodb://localhost/server";
+//const MONGO_URI = "mongodb://mongodb/server";
 
 mongoose
   .connect(MONGO_URI)
