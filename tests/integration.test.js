@@ -3,14 +3,13 @@ const request = require("supertest")
 const app = require("../app")
 
 
-describe("Integration tests", () => {
+describe("TEST SUITE", () => {
 
-    describe("endpoint and error test", () => {
-
+    describe("integration test", () => {
 
         it("POST /messages returns either 200 and OK or 500 and custom error. Timeouts disabled", async () => {
             let i = 0
-            while (i < 7) {
+            while (i < 10) {
                 i++
                 const test = await request(app)
                     .post("/messages",)
@@ -19,13 +18,16 @@ describe("Integration tests", () => {
                         "destination": "testDestination",
                         "message": "testBody"
                     })
-                    .expect(200)
+                    .expect([200, 500])
                     .catch(err => {
-                        expect(500)
-                        expect(err.message).to.include(`expected 200 "OK", got 500 "Internal Server Error"`)
+                        console.log(err)
                     })
             }
+
         }).timeout(0)
+    })
+
+    describe("Validating middleware test", () => {
 
         it("POST /messages with wrong content type returns 400 and custom message ", async () => {
             const test = await request(app)
@@ -163,8 +165,7 @@ describe("Integration tests", () => {
             expect(test1.body && test2.body && test3.body).to.deep.equal("This method is not authorized for this endpoint")
 
         })
-
-
     })
-
 })
+
+

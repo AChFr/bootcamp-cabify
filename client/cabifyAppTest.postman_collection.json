@@ -16,7 +16,36 @@
 					"raw": "{\r\n    \"destination\": \"testDestination\",\r\n     \"message\": \"testMessage\"\r\n\r\n}",
 					"options": {
 						"raw": {
-							"language": "text"
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9001/messages",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"messages"
+					]
+				},
+				"description": "correct request."
+			},
+			"response": []
+		},
+		{
+			"name": "wrong endpoint",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"destination\": \"testDestination\",\r\n     \"message\": \"testMessage\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
 						}
 					}
 				},
@@ -65,35 +94,6 @@
 					"port": "9001",
 					"path": [
 						"messages"
-					]
-				},
-				"description": "correct request."
-			},
-			"response": []
-		},
-		{
-			"name": "wrong endpoint",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"destination\": \"testDestination\",\r\n     \"message\": \"testMessage\"\r\n\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:9001/messagess",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "9001",
-					"path": [
-						"messagess"
 					]
 				},
 				"description": "correct request."

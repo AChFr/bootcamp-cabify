@@ -1,24 +1,24 @@
-const APIHandler = require("../services/message.service");
-const { contentValidator, jsonParser } = require("../middleware");
 const router = require("express").Router();
 
-const messageService = new APIHandler
+const { reqBodyValidator, jsonParser } = require("../middleware");
+const { getEntries } = require("../services/database.service")
+const { formClientResponse } = require("../controllers/clientResponse.controller")
 
 
 
-router.post("/messages", jsonParser, contentValidator, (req, res, next) => {
+router.post("/messages", jsonParser, reqBodyValidator, async (req, res, next) => {
 
-  messageService
-    .sendMessage(req.body)
-    .then(response => res.json(response.data))
-    .catch(err => next(err))
+  const responseToClient = await formClientResponse(req.body)
+  res.status(responseToClient.status).json(responseToClient.message)
 })
 
-//// GET requests should never be blocked
+router.get("/messages", async (req, res, next) => {
 
-// router.get("/messages", (req, res, next) => {
-//   res.status(405).json("This method is not authorized for this endpoint")
-// })
+  const popino = await getEntries()
+
+  console.log(popino)
+  return res.status(200).json(popino)
+})
 
 
 router.put("/messages", (req, res, next) => {
@@ -30,6 +30,8 @@ router.patch("/messages", (req, res, next) => {
 router.delete("/messages", (req, res, next) => {
   res.status(405).json("This method is not authorized for this endpoint")
 })
+
+
 
 
 
