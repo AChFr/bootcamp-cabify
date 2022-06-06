@@ -13,8 +13,6 @@ const messageSchema = new Schema(
             required: true
         },
 
-
-
         status: {
             type: String,
             enum: ["sent", "unconfirmed", "not sent"],

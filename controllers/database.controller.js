@@ -14,7 +14,7 @@ const recordMessage = async (entryInfo) => {
 
             const thisMoment = Date.now()
             const momentsAgo = new Date(thisMoment - 1000)
-            const duplicate = await databaseApiHandler.checkForDuplicates({ createdAt: momentsAgo })
+            const duplicate = await databaseApiHandler.checkForDuplicates({ ...entryInfo, createdAt: momentsAgo })
 
             if (duplicate) {
                 status = "success"
@@ -31,7 +31,6 @@ const recordMessage = async (entryInfo) => {
         }
 
     }
-
 
     else {
         firstTry = true

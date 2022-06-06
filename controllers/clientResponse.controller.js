@@ -1,13 +1,15 @@
 const { sendMessage } = require("./messegeapp.controller")
 const { recordMessage } = require("./database.controller");
 
+const sendMessageToApi = async (messageInfo) => {
 
-const response = {}
-const responseToClient = {}
-
-const sendAndRecord = async (messageInfo) => {
-    const entryData = { ...messageInfo, status: undefined }
     response.fromMessageapp = await sendMessage(messageInfo)
+}
+
+const recordMessageOnDb = async (messageInfo) => {
+
+    const entryData = { ...messageInfo, status: undefined }
+
     switch (response.fromMessageapp) {
         case "success":
             entryData.status = "sent"
@@ -19,15 +21,19 @@ const sendAndRecord = async (messageInfo) => {
             entryData.status = "not sent"
             break
     }
+
     response.fromDatabase = await recordMessage(entryData)
 }
 
-
-
-
 const formClientResponse = async (requestBody) => {
 
-    await sendAndRecord(requestBody)
+    const responseToClient = {}
+    const response = {}
+
+
+    await sendMessageToApi(requestBody)
+    await recordMessageOnDb(requestBody)
+
     let statusCombination = response.fromMessageapp + "&" + response.fromDatabase
 
 

@@ -13,7 +13,7 @@ const createEntry = async (entryInfo) => {
 const checkForDuplicates = async (searchCriteria) => {
     let response
     const isDuplicate = await Message.find(searchCriteria)
-    isDuplicate.length === 0 ? response = false : response = true
+    response = isDuplicate.length === 0 ? false : true
     return response
 }
 
