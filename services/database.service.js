@@ -24,8 +24,4 @@ const getEntries = async () => {
 
 }
 
-
-const deleteAll = () => {
-    Message.collection.drop()
-}
 module.exports = { createEntry, checkForDuplicates, getEntries, deleteAll }

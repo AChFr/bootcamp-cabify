@@ -1,11 +1,10 @@
 const router = require("express").Router();
 
 const { reqBodyValidator, jsonParser } = require("../middleware");
-//const { sendMessage } = require("../controllers/messegeapp.controller")
-//const { recordMessage } = require("../controllers/database.controller");
-const { getEntries, deleteAll } = require("../services/database.service")
-
+const { getEntries } = require("../services/database.service")
 const { formClientResponse } = require("../controllers/clientResponse.controller")
+
+
 
 router.post("/messages", jsonParser, reqBodyValidator, async (req, res, next) => {
 
