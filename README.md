@@ -1,15 +1,8 @@
-# Exercise 3 solution
+# Exercise 4 solution
 
-## Getting started
+Right now, to solve possible issues of concurrent usage, both sentMessage and 
+topUpCredit are locked at the beginning and unlocked at the end  by using locked-sync npm package
+[more info here](https://www.npmjs.com/package/locked-sync).
 
-We are now adding a persistence layer, in our case MongoDB.
+the last issue of the forth stage of the is commented on lines 58 through 67 on the sendMessage controller.
 
-Al the source code can be found under `/src` folder with models controllers and database connection
-
-To check results we can run:
-
-1) run messageapp with `npm run docker` on port 3000
-2) run a local app with `npm run app` on port 9001
-3) or run both servers in one command `npm run start:all`
-
-You can run `./curl_requests.sh` to run some curl into the app and see results.
