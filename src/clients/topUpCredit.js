@@ -1,6 +1,11 @@
 import Credit from "../models/credit.js";
 
+import lockedSync from "locked-sync";
+const sync = lockedSync();
+
+
 export default async (creditAmount) => {
+  const end = await sync();
 
   try {
     const existingCredit = await Credit.findOne()
@@ -22,11 +27,10 @@ export default async (creditAmount) => {
       return newCredit;
     }
 
-
-
   } catch (err) {
     console.log("Error while saving", err);
-  }
+
+  } finally { end() }
 }
 
 
