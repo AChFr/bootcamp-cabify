@@ -25,4 +25,4 @@ services:
       - 27018:27017
     command:
       - '--logpath'
-      - '/var/log/mongodbbackup/mongod.log'
+      - '/var/log/mongodb/mongodBackup.log'

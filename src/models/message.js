@@ -12,4 +12,6 @@ const messageSchema = new mongoose.Schema({
   },
 });
 
-export default database.model("Message", messageSchema);
+const mainMessage = database.model("Message", messageSchema)
+const reserveMessage = backupDatabase.model("Message", messageSchema)
+export { mainMessage, reserveMessage }

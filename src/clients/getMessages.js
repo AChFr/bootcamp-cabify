@@ -1,3 +1,3 @@
-import Message from "../models/message.js";
+import { mainMessage, reserveMessage } from "../models/message.js";
 
-export default (conditions = {}) => Message.find(conditions);
+export default (conditions = {}) => mainMessage.find(conditions);
