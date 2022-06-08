@@ -12,11 +12,10 @@ export default async (messageParams) => {
 
   try {
     const doc = await mainDatabase.create(messageParams)
-
-    // tried to simplify it the most, but  {..doc} did not work
-    await secondaryDatabase.create({ _id: doc._id, destination: doc.destination, body: doc.body, status: doc.status })
-    return doc
+    await secondaryDatabase.create(doc._doc)
+    return doc._doc
   } catch (err) {
+    //implement que to sync db later
     console.log("Error while saving", err)
     throw err
   } finally {

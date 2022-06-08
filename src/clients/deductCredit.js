@@ -16,8 +16,6 @@ export default async (messageCost) => {
         } catch {
             throw new Error("something went wrong. no payment has been made. the message wont be sent")
         }
-
-
     } catch (err) {
         throw err
     } finally {
