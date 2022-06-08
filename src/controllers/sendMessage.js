@@ -1,11 +1,8 @@
 import http from "http";
 
-
-
 import saveMessage from "../clients/saveMessage.js";
 import checkCredit from "../clients/checkCredit.js";
 import deductCredit from "../clients/deductCredit.js";
-
 
 const messageCost = 10
 
@@ -38,8 +35,6 @@ export default async (req, res) => {
     }
 
     const postReq = http.request(postOptions);
-
-
     postReq.on("response", async (postRes) => {
       try {
         await saveMessage({
@@ -47,13 +42,11 @@ export default async (req, res) => {
           status: postRes.statusCode === 200 ? "OK" : "ERROR",
         });
         if (postRes.statusCode !== 200) {
-
           throw new Error('Error in the messageapp request');
         }
         res.statusCode = 200;
         res.end(postRes.body);
       } catch (err) {
-
         await deductCredit(-messageCost)
         res.statusCode = 500;
         res.end(`Internal server error: SERVICE ERROR ${err}`);
@@ -63,13 +56,11 @@ export default async (req, res) => {
     postReq.on("timeout", async () => {
       console.error("Timeout Exceeded!");
       postReq.abort();
-
       try {
         await saveMessage({
           ...req.body,
           status: "TIMEOUT",
         });
-
       } finally {
         res.statusCode = 500;
         res.end("Internal server error: TIMEOUT");
@@ -78,24 +69,15 @@ export default async (req, res) => {
 
     postReq.on("error", async (err) => {
       console.log("ERRRORAAAAZOOOO")
-
       await deductCredit(-messageCost)
       res.statusCode = 500;
       res.json(err);
     });
-
     postReq.write(body);
     postReq.end();
-
-  }
-
-  else {
+  } else {
     res.statusCode = 500
     res.end("not enought credit. Top up!")
   }
-
-
-
-
 
 }

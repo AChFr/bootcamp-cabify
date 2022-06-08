@@ -5,9 +5,7 @@ import backupDatabase from "../backupDatabase.js";
 
 
 const creditSchema = new mongoose.Schema({
-
     amount: Number
-
 });
 
 const mainCredit = database.model("Credit", creditSchema)
