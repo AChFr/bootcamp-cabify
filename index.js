@@ -40,11 +40,13 @@ app.post(
   validate({ body: messageSchema }),
   sendMessage
 );
+
 app.post("/credit",
   bodyParser.json(),
   validate({ body: creditSchema }),
   topUpCredit
 )
+
 app.get("/messages", getMessages);
 
 app.use((err, req, res, _next) => {
