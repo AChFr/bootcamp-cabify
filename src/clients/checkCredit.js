@@ -3,25 +3,20 @@ import { mainCredit, reserveCredit } from "../models/credit.js";
 let mainDatabase = mainCredit
 let secondaryDatabase = reserveCredit
 
+const checkBalance = async (dbName, cost) => {
+    const existingonDb = await dbName.findOne()
+    return (existingonDb) && (existingonDb.amount - cost >= 0)
+}
+
+
 export default async (messageCost) => {
 
     try {
-        const existingCreditOnMain = await mainDatabase.findOne()
-
-        if ((existingCreditOnMain) && (existingCreditOnMain.amount - messageCost >= 0)) {
-            return true
-        } else {
-            return false
-        }
+        return await checkBalance(mainDatabase, messageCost)
     } catch {
         console.log("Error while checking balance on main db");
         try {
-            const existingCreditOnSeconday = await secondaryDatabase.findOne()
-            if ((existingCreditOnSeconday) && (existingCreditOnSeconday.amount - messageCost >= 0)) {
-                return true
-            } else {
-                return false
-            }
+            return await checkBalance(secondaryDatabase, messageCost)
         } catch (err) {
             throw new Error(("something went wrong. unable to check balance on either database. message aborted"))
         }
