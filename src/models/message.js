@@ -4,11 +4,12 @@ import database from "../database.js";
 import backupDatabase from "../backupDatabase.js";
 
 const messageSchema = new mongoose.Schema({
+  taskID: String,
   destination: String,
   body: String,
   status: {
     type: String,
-    enum: ["ERROR", "OK", "TIMEOUT"],
+    enum: ["ERROR", "OK", "TIMEOUT", "QUEUED"],
   },
 });
 

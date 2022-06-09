@@ -1,8 +1,5 @@
-# Exercise 4 solution
+# Exercise 6 solution
 
-Right now, to solve possible issues of concurrent usage, both sentMessage and 
-topUpCredit are locked at the beginning and unlocked at the end  by using locked-sync npm package
-[more info here](https://www.npmjs.com/package/locked-sync).
-
-the last issue of the forth stage of the is commented on lines 58 through 67 on the sendMessage controller.
+implemented the queueing process with redis and bull. added the endpoint to cjeck a specific message. modified the message model.
+next steps would be to implement retries if the messagage has error status. 
 
