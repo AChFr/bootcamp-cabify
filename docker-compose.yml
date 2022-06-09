@@ -4,6 +4,10 @@ services:
   #   build: .
   #   ports:
   #     - "9003:9003"
+  #   depends_on:
+  #     - mongodb
+  #     - mongodbbackup
+  #     - cache
   messageapp:
     image: cabify/backend-bootcamp-messageapp
     ports:
@@ -26,3 +30,15 @@ services:
     command:
       - '--logpath'
       - '/var/log/mongodb/mongodBackup.log'
+
+  cache:
+    image: redis
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning
+    volumes:
+      - cache:/data
+volumes:
+  cache:
+    driver: local
