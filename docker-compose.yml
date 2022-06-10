@@ -1,44 +1,90 @@
 version: "3"
 services:
-  # sever:
-  #   build: .
+
+  # messageservice:
+  #   build: messageMicroservice/
   #   ports:
   #     - "9003:9003"
-  #   depends_on:
-  #     - mongodb
-  #     - mongodbbackup
+  #   links:
+  #     - messageapp
+  #     - main_message
+  #     - replica_message
   #     - cache
+  #     - creditservice
+  #   depends_on:
+  #     - messageapp
+  #     - main_message
+  #     - replica_message
+  #     - cache
+
+  # creditservice:
+  #   build: creditMicroservice/
+  #   ports:
+  #     - "9017:9017"
+  #   links:
+  #     - main_credit
+  #     - replica_credit
+  #     - cache
+  #   depends_on:
+  #     - main_credit
+  #     - replica_credit
+  #     - cache
+
   messageapp:
     image: cabify/backend-bootcamp-messageapp
     ports:
       - "3000:3000"
-  mongodb:
+
+  main_credit:
     image: mongo
     volumes:
-      - ./data/db1:/data/db1
+      - ./creditMicroservice/data/db:/credit/data/db
     ports:
       - 27017:27017
     command:
       - '--logpath'
-      - '/var/log/mongodb/mongod.log'
-  mongodbbackup:
+      - '/var/log/mongodb/main_credit.log'
+
+  replica_credit:
     image: mongo
-    volumes:
-      - ./data/db2:/data/db2
-    ports:
-      - 27018:27017
     command:
       - '--logpath'
-      - '/var/log/mongodb/mongodBackup.log'
+      - '/var/log/mongodb/replica_credit.log'
+    volumes:
+      - ./creditMicroservice/data/replica:/credit/data/replica
+    ports:
+      - 27018:27017
+
+  main_message:
+    image: mongo
+    command:
+      - '--logpath'
+      - '/var/log/mongodb/main_message.log'
+    volumes:
+      - ./messageMicroservice/data/db:/message/data/db
+    ports:
+      - 27027:27017
+  replica_message:
+    image: mongo
+    command:
+
+      - '--logpath'
+      - '/var/log/mongodb/replica_message.log'
+    volumes:
+      - ./messageMicroservice/data/replica:/message/data/replica
+    ports:
+      - 27028:27017
 
   cache:
     image: redis
-    restart: always
     ports:
-      - '6379:6379'
-    command: redis-server --save 20 1 --loglevel warning
-    volumes:
-      - cache:/data
-volumes:
-  cache:
-    driver: local
+      - 6379:6379
+
+  redis-commander:
+    container_name: redis-commander
+    image: rediscommander/redis-commander
+    restart: always
+    environment:
+      - REDIS_HOSTS=local:cache:6379
+    ports:
+      - "8081:8081"

@@ -3,10 +3,10 @@ import express from "express";
 import { ValidationError, Validator } from "express-json-validator-middleware";
 import redis from "./redis.js";
 
-import getMessages from "./src/controllers/getMessages.js";
-import getMessageStatus from "./src/clients/getMessageStatus.js";
-import sendMessage from "./src/controllers/sendMessage.js";
-import topUpCredit from "./src/controllers/topUpCredit.js";
+import getMessages from "./old/src/controllers/getMessages.js.js";
+import getMessageStatus from "./old/src/clients/getMessageStatus.js.js";
+import sendMessage from "./old/src/controllers/sendMessage.js.js";
+import topUpCredit from "./old/src/controllers/topUpCredit.js.js";
 
 
 const app = express();

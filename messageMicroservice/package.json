@@ -1,33 +1,23 @@
 {
-  "name": "exercise3",
+  "name": "messagemicroservice",
   "version": "1.0.0",
-  "description": "Cabify bootcamp exercise 3",
-  "author": "Cabify dev team",
-  "license": "ISC",
+  "description": "",
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "format": "prettier --check .",
-    "format:fix": "prettier --write .",
-    "test": "jest",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "app": "node index.js",
-    "dev": "nodemon index.js",
     "docker": "docker-compose up",
-    "start:all": "npm run docker & npm run app"
+    "start:all": "npm run docker & npm run app",
+    "dev": "nodemon index.js"
   },
-  "engineStrict": true,
-  "engines": {
-    "node": "18.1.0",
-    "npm": "8.3.1"
-  },
+  "author": "",
+  "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.0.1",
     "@cabify/eslint-config": "1.0.2",
     "body-parser": "1.19.2",
     "bull": "^4.8.3",
-    "eslint": "8.11.0",
-    "eslint-import-resolver-jest": "3.0.2",
     "express": "4.17.3",
     "express-json-validator-middleware": "2.2.1",
     "jest": "27.5.1",

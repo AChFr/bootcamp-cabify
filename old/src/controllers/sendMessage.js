@@ -1,9 +1,9 @@
 import http from "http";
 
-import saveMessage from "../clients/saveMessage.js";
+import saveMessage from "../../../old/src/clients/saveMessage.js";
 import checkCredit from "../clients/checkCredit.js";
 import deductCredit from "../clients/deductCredit.js";
-import mainQueue from "../clients/mainQueue.js";
+import mainQueue from "../../../old/src/clients/mainQueue.js";
 import uniqid from "uniqid"
 
 
