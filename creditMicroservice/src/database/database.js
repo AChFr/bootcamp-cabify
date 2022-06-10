@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import "dotenv/config"
 
-
 const serverMain = `${process.env.MAIN_CREDIT}`
 const databaseMain = "credit_main"
 
@@ -15,8 +14,6 @@ const mainCredit = mongoose.createConnection(`mongodb://${serverMain}/${database
 const reserveCredit = mongoose.createConnection(`mongodb://${serverBackup}/${databaseBackup}`, {
   useNewUrlParser: true,
 })
-
-
 
 let mainDatabase = mainCredit
 let backupDatabase = reserveCredit

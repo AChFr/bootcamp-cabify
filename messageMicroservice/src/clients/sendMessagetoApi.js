@@ -8,7 +8,7 @@ export default async (messageInfo, callback) => {
     let response
     const { destination, body } = messageInfo
     const content = JSON.stringify({ destination, body });
-    console.log("EL VIEJO====>", messageInfo)
+
 
     const postOptions = {
         host: process.env.MESSAGEAPP,

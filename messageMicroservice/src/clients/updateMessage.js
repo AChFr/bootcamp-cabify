@@ -11,7 +11,6 @@ export default async (id, messageInfo) => {
 
   try {
     const doc = await mainDatabase.findByIdAndUpdate(id, messageInfo, { new: true })
-    console.log("EL NUEVO======>", doc)
     await secondaryDatabase.findByIdAndUpdate(id, messageInfo, { new: true })
   } catch (err) {
     //implement que to sync db later

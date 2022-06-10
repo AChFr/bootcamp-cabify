@@ -11,7 +11,6 @@ const validator = new Validator({ allErrors: true });
 const { validate } = validator;
 
 
-
 const creditSchema = {
     type: "object",
     required: ["amount"],
@@ -21,7 +20,6 @@ const creditSchema = {
         }
     }
 }
-
 
 app.post("/credit",
     bodyParser.json(),

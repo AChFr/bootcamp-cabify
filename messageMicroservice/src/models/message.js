@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+import mongoose from "mongoose"
 
-import { mainDatabase, backupDatabase } from "../database/database.js";
+import { mainDatabase, backupDatabase } from "../database/database.js"
 
 
 const messageSchema = new mongoose.Schema({
@@ -11,7 +11,7 @@ const messageSchema = new mongoose.Schema({
     type: String,
     enum: ["ERROR", "OK", "TIMEOUT", "NO CREDIT", "PAYMENT ERROR", "QUEUED"],
   },
-});
+})
 
 const mainMessage = mainDatabase.model("Message", messageSchema)
 const reserveMessage = backupDatabase.model("Message", messageSchema)

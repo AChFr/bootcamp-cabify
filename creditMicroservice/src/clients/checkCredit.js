@@ -36,9 +36,8 @@ export default async () => {
     try {
         const hasEnoughCredit = await checkBalance(maindb, process.env.MESSAGE_COST)
         if (hasEnoughCredit) {
-
-
             response = "QUEUED"
+
             try {
                 const newCredit = await modifyBalance(maindb, process.env.MESSAGE_COST)
                 await backUpBalance(reservedb, newCredit._doc)
@@ -46,10 +45,8 @@ export default async () => {
                 response = "PAYMENT ERROR"
                 console.error("impossible to modify Credit")
             }
-
         }
         else {
-
             console.log("Not enought money")
             response = "NO CREDIT"
         }
