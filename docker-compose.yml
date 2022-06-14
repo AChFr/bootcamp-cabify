@@ -1,65 +1,51 @@
 version: "3"
 services:
-  message1:
-    build: message/
-    restart: always
-    environment:
-      - APIPORT=9007
-    # ports:
-    #   - "9007:9007"
-    links:
-      - messageapp
-      - mongodb_message
-      - replica_message
-      - redis
-    depends_on:
-      - messageapp
-      - mongodb_message
-      - replica_message
-      - redis
+
+  registrator:
+    image: gliderlabs/registrator
     volumes:
-      - "./message:/app"
-  message2:
-    build: message/
-    restart: always
-    environment:
-      - APIPORT=9008
-    # ports:
-    #   - "9008:9007"
-    links:
-      - messageapp
-      - mongodb_message
-      - replica_message
-      - redis
+      - /var/run/docker.sock:/tmp/docker.sock
+    command: -internal consul://consul:8500
     depends_on:
-      - messageapp
-      - mongodb_message
-      - replica_message
-      - redis
-    volumes:
-      - "./message:/app"
-  message3:
-    build: message/
-    restart: always
-    environment:
-      - APIPORT=9009
-    # ports:
-    #   - "9009:9007"
+      - consul
     links:
-      - messageapp
-      - mongodb_message
-      - replica_message
-      - redis
-    depends_on:
-      - messageapp
-      - mongodb_message
-      - replica_message
-      - redis
+      - consul
+
+  consul:
+    image: consul
+    command: "agent -server -bootstrap -ui -client=0.0.0.0 -bind='{{ GetPrivateIP }}'"
+
+  message-old:
+    build: messagev1/
+    deploy:
+      replicas: 1
+    environment:
+      - APIPORT=80
+      - SERVICE_NAME=service-v1
+    ports:
+      - 80
+    links:
+      - haproxy
+
     volumes:
-      - "./message:/app"
+      - "./messagev1:/app"
+
+  message-new:
+    build: messagev2/
+    deploy:
+      replicas: 1
+    environment:
+      - APIPORT=80
+      - SERVICE_NAME=service-v2
+    ports:
+      - 80
+    links:
+      - haproxy
+
+    volumes:
+      - "./messagev2:/app"
   credit:
     build: credit/
-    restart: always
     ports:
       - "9017:9017"
     links:
@@ -121,10 +107,12 @@ services:
       - 6379:6379
 
   haproxy:
-    build: ./haproxy
+    image: haproxy:1.8-alpine
     ports:
       - 9000:9000
+    links:
+      - registrator
     depends_on:
-      - message1
-      - message2
-      - message3
+      - registrator
+    volumes:
+      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg

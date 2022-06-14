@@ -9,7 +9,7 @@ import sendMessage from "./src/controllers/sendMessage.js";
 import getMessages from "./src/controllers/getMessages.js";
 import getMessageStatus from "./src/controllers/getMessageStatus.js";
 import getHealthStatus from "./src/controllers/getHealthStatus.js";
-
+import getVersion from "./src/controllers/getVersion.js";
 const app = express();
 
 const validator = new Validator({ allErrors: true });
@@ -50,6 +50,7 @@ app.get("/message/:messageId/status", getMessageStatus);
 
 app.get("/health", getHealthStatus);
 
+//app.get("/version", getVersion)
 
 app.use((err, req, res, next) => {
   console.log(res.body);
