@@ -1,5 +1,4 @@
 import express from "express";
-
 import bodyParser from "body-parser";
 import {
   Validator,
@@ -9,6 +8,7 @@ import {
 import sendMessage from "./src/controllers/sendMessage.js";
 import getMessages from "./src/controllers/getMessages.js";
 import getMessageStatus from "./src/controllers/getMessageStatus.js";
+import getHealthStatus from "./src/controllers/getHealthStatus.js";
 
 const app = express();
 
@@ -47,6 +47,10 @@ app.get("/messages", getMessages);
 
 app.get("/message/:messageId/status", getMessageStatus);
 
+
+app.get("/health", getHealthStatus);
+
+
 app.use((err, req, res, next) => {
   console.log(res.body);
   if (err instanceof ValidationError) {
@@ -56,6 +60,8 @@ app.use((err, req, res, next) => {
   }
 });
 
-app.listen(9007, () => {
-  console.log("App started on PORT 9007");
+const port = process.env.APIPORT
+
+app.listen(port, () => {
+  console.log(`app started on ${port}`);
 });
