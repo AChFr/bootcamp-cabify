@@ -9,7 +9,7 @@ export default function () {
 
     try {
       const credit = await getCredit();
-
+      console.log("CREDIT=========================>", credit)
       if (credit.amount - messageData.location.cost < 0) {
         console.error("Credito insuficiente");
         send_queue.add({
