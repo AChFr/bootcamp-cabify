@@ -1,7 +1,7 @@
 {
-  "name": "exercise6",
+  "name": "exercise7",
   "version": "1.0.0",
-  "description": "Cabify bootcamp exercise 5",
+  "description": "Cabify bootcamp exercise 7",
   "repository": {
     "type": "git",
     "url": "git://github.com/cabify/backend-bootcamp.git"
@@ -14,6 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "bull": "^3.4.8",
+    "circuit-breaker-js": "0.0.1",
     "express": "^4.16.4",
     "express-json-validator-middleware": "^1.2.3",
     "loglevel": "^1.8.0",
