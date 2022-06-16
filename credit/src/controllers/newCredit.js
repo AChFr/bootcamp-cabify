@@ -1,10 +1,17 @@
-import newcredit from "../clients/newCredit.js";
+const newcredit = require("../clients/newCredit");
 
-export default async (req, res) => {
-  await newcredit({
+module.exports = function(req, res) {
+  newcredit(
+    {
       ...req.body,
       status: "OK"
-  });
-
-  res.end("OK");
+    },
+    function(_result, error) {
+      if (error) {
+        res.statusCode = 500;
+        res.end(error);
+      }
+      res.end("OK");
+    }
+  );
 };

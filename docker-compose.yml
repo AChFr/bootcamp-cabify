@@ -1,53 +1,23 @@
 version: "3"
 services:
-
-  registrator:
-    image: gliderlabs/registrator
-    volumes:
-      - /var/run/docker.sock:/tmp/docker.sock
-    command: -internal consul://consul:8500
+  message:
+    build: message/
+    ports:
+      - "9010:9010"
+    links:
+      - messageapp
+      - mongodb_message
+      - replica_message
+      - redis
     depends_on:
-      - consul
-    links:
-      - consul
-
-  consul:
-    image: consul
-    command: "agent -server -bootstrap -ui -client=0.0.0.0 -bind='{{ GetPrivateIP }}'"
-
-  message-old:
-    build: messagev1/
-    deploy:
-      replicas: 1
-    environment:
-      - APIPORT=80
-      - SERVICE_NAME=service-v1
-    ports:
-      - 80
-    links:
-      - haproxy
-
-    volumes:
-      - "./messagev1:/app"
-
-  message-new:
-    build: messagev2/
-    deploy:
-      replicas: 1
-    environment:
-      - APIPORT=80
-      - SERVICE_NAME=service-v2
-    ports:
-      - 80
-    links:
-      - haproxy
-
-    volumes:
-      - "./messagev2:/app"
+      - messageapp
+      - mongodb_message
+      - replica_message
+      - redis
   credit:
     build: credit/
     ports:
-      - "9017:9017"
+      - "9020:9020"
     links:
       - mongodb_credit
       - replica_credit
@@ -56,63 +26,59 @@ services:
       - mongodb_credit
       - replica_credit
       - redis
-    volumes:
-      - "./credit:/app"
   messageapp:
-    image: cabify/backend-bootcamp-messageapp
+    image: cabify/backend-bootcamp-messageapp:exercise10
     ports:
       - "3000:3000"
 
   mongodb_credit:
     image: mongo
-    command:
-      - '--logpath'
-      - '/var/log/mongodb/main_credit.log'
+    command: mongod --port 27017
     volumes:
       - ./credit/data/db:/credit/data/db
     ports:
       - 27017:27017
   replica_credit:
     image: mongo
-    command:
-      - '--logpath'
-      - '/var/log/mongodb/replica_credit.log'
+    command: mongod --port 27018
     volumes:
       - ./credit/data/replica:/credit/data/replica
     ports:
-      - 27018:27017
+      - 27018:27018
 
   mongodb_message:
     image: mongo
-    command:
-      - '--logpath'
-      - '/var/log/mongodb/main_message.log'
+    command: mongod --port 27027
     volumes:
       - ./message/data/db:/message/data/db
     ports:
-      - 27027:27017
+      - 27027:27027
   replica_message:
     image: mongo
-    command:
-      - '--logpath'
-      - '/var/log/mongodb/replica_message.log'
+    command: mongod --port 27028
     volumes:
       - ./message/data/replica:/message/data/replica
     ports:
-      - 27028:27017
+      - 27028:27028
 
   redis:
     image: redis
     ports:
       - 6379:6379
-
-  haproxy:
-    image: haproxy:1.8-alpine
-    ports:
-      - 9000:9000
-    links:
-      - registrator
-    depends_on:
-      - registrator
+  grafana:
+    image: grafana/grafana-enterprise
     volumes:
-      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+      - ./grafana/data:/grafana/data
+      - ./grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yaml
+    ports:
+      - 5005:3000
+
+  prometheus:
+    image: prom/prometheus
+
+    volumes:
+      - ./prometheus/data:/prometheus/data
+      - ./prometheus/config/prometheus.yml:/etc/prometheus/prometheus.yml
+
+    ports:
+      - 9090:9090
